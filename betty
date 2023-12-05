@@ -1,0 +1,31 @@
+#include "shell.h"
+
+/**
+ * print_message - Prints a message 
+ * @message: The message to be printed
+ *
+ * This function prints the provided message
+ */
+void print_message(char *message)
+{
+    if (message != NULL)
+    {
+        printf("%s\n", message);
+    }
+}
+
+/**
+ * main - Entry point of the program
+ *
+ * This function serves as the entry point of the program.
+ * It demonstrates the usage of the print_message function.
+ */
+int main(void)
+{
+    char *my_message = "MK is cool";
+
+    print_message(my_message);
+
+    return (0);
+}
+
