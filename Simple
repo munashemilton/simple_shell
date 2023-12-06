@@ -1,0 +1,28 @@
+#include "shell.h"
+
+    # Get user input
+    command = input("echo ").strip()
+    
+    # Split command into command and arguments
+    args = command.split()
+    cmd = args[0]  # Command is the first argument
+    arguments = args[1:]  # Other arguments
+    
+    # Exit the shell
+    if cmd.lower() == "exit":
+        break
+    
+    
+        # Execute the command with its arguments
+        result = subprocess.run([cmd] + arguments, capture_output=True, text=True)
+        
+        # Display the output of the command
+        print(result.stdout)
+        
+        # Display error message if there's any
+        if result.stderr:
+            print(result.stderr)
+    
+    except FileNotFoundError:
+        print("Command not found:", cmd)
+
