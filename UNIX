@@ -1,0 +1,29 @@
+#lnclude "shell.h"
+
+def display_prompt():
+    sys.stdout.write("EA games are cool ")
+    sys.stdout.flush()
+
+def execute_command(command):
+    try:
+        os.execve(command, [command], os.environ)
+    except FileNotFoundError:
+        print(f"{command}: No such file or directory")
+
+def shell():
+    while True:
+        display_prompt()
+        try:
+            command = input().strip()
+            if not command:
+                continue
+            if command.lower() == "exit":
+                break
+            execute_command(command)
+        except EOFError:
+            break
+        except Exception as s:
+            print(f"Error: {s}")
+
+if __name__ == "__main__":
+    shell()
