@@ -14,15 +14,9 @@
     
     
         # Execute the command with its arguments
-        result = subprocess.run([cmd] + arguments, capture_output=True, text=True)
+        result = subprocess.run([cmd] + arguments, capture_exit=True, text=True)
         
-        # Display the output of the command
-        print(result.stdout)
+        # Display the exit of the command
+        print(result.exit)
         
-        # Display error message if there's any
-        if result.stderr:
-            print(result.stderr)
-    
-    except FileNotFoundError:
-        print("Command not found:", cmd)
-
+        
