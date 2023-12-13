@@ -1,22 +1,48 @@
 #include "shell.h"
 
-    # Get user input
-    command = input("echo ").strip()
-    
-    # Split command into command and arguments
-    args = command.split()
-    cmd = args[0]  # Command is the first argument
-    arguments = args[1:]  # Other arguments
-    
-    # Exit the shell
-    if cmd.lower() == "exit":
-        break
-    
-    
-        # Execute the command with its arguments
-        result = subprocess.run([cmd] + arguments, capture_exit=True, text=True)
-        
-        # Display the exit of the command
-        print(result.exit)
-        
-        
+def parse_command(command):
+    # Split the command into its components
+    return command.split()
+
+def find_executable(command, path):
+    # Check if the command exists in any of the directories listed in the PATH
+    for directory in path.split(os.pathsep):
+        executable = os.path.join(directory, command)
+        if os.path.exists(executable) and os.access(executable, os.X_OK):
+            return executable
+    return None
+
+def execute_command(command):
+    # Get the PATH environment variable
+    path = os.getenv("PATH")
+
+    # Parse the command
+    args = parse_command(command[0])
+
+    # Check if the command is 'env'
+    if args[0] == "env":
+        # Print the current environment
+        for key, value in os.environ.items():
+            print(f"{key}={value}")
+        return
+
+    # Check if the command exists in the PATH
+    executable = find_executable(args[0], path)
+    if executable:
+        # Execute the command
+        os.execv(executable, args)
+    else:
+        print(f"Command '{command[0]}' not found.")
+
+if __name__ == "__main__":
+    while True:
+        # Get user input
+        user_input = input("environment ")
+
+        # Check for exit command
+        if user_input.lower() == "exit":
+            break
+
+        # Execute the command
+        execute_command(user_input.split())
+
