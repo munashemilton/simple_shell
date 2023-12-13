@@ -1,0 +1,24 @@
+#include "shell.h"
+
+def main():
+    while True:
+        try:
+            # Display prompt and wait for user input
+            command = input("so cool ")
+
+            # Check for end of file (Ctrl+D)
+            if not command:
+                break
+
+            # Execute the command using execve
+            try:
+                os.execve(command, [command], os.environ)
+            except FileNotFoundError:
+                print(f"Error: Command '{command}' not found")
+
+        except EOFError:
+            # Handling Ctrl+D
+            break
+
+if __name__ == "__main__":
+    main()
